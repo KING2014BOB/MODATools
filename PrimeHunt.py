@@ -1,68 +1,68 @@
 import BasicPrime
+import ComplexPrime
+import TestSuite
 
-#Power computations
-n = 7
+mode = 0
 
-def primeFunctionChoice(n):
+def setup():
 
-	if(n==1):
-		return isItPrime()
+	global mode
 
-	else:
-		return BasicPrime.isItProbablyPrime()
+	print("Do you want to use")
+	print("1: Basic")
+	print("2: Complex")
+	
 
+	choice = raw_input("Do you want to use 1:Basic or 2:Complex:")
+	choice = int(choice)
 
-def isItPrime(number,exponent):
-	lucasLehmerList = []
-	result = False
+	if(choice == 1):
+		mode = 1
 
-	possiblePrime = (number ** exponent) - 1
-	print possiblePrime
-
-	lucasLehmerList = generateLucasLehmerNumbers(n)
-
-	if (lucasLehmerList[exponent-2] % possiblePrime == 0):
-		result = True
+	elif(choice == 2):
+		mode = 2
 
 	else:
-		result = False
+		print("incorrect choice")
 
-	return result
+
+def primeFunctionChoice(number,exponent):
+
+	if(mode==2):
+		return ComplexPrime.isItPrime(number,exponent)
+
+	else:
+		return BasicPrime.isItProbablyPrime(number)
+
 
 def primeCalculator(noNums):
 
 	primeList = []
+	primeValues = []
+	probablePrimeBool = False
 
-	for i in range(1,noNums + 1):
-		probablePrime = isItProbablyPrime(i)
-		#print("is %d prime: %s" % (i,isItProbablyPrime(i)) )
-
-		if probablePrime == True:
-			primeList.append(i)
-
-	print(primeList)
-	return probablePrime
-
-
-def generateLucasLehmerNumbers(noNums):
-
-	lucasLehmerList = []
-	for i in range(1,n + 1):
-		lucasLehmerList.append(getLucasLehmerNumber(i))
-
-	return(lucasLehmerList)
-
-
-def getLucasLehmerNumber(N):
-
-	if( N <= 1 ):
-		return 4
+	if mode == 1:
+		j = 1
 
 	else:
-		return ((getLucasLehmerNumber(N-1) ** 2) - 2)
+		j = 2
 
-isItPrime(2,3)
-#primeCalculator(30)
 
-print(BasicPrime.isItProbablyPrime(7))
+	for i in range(j,noNums):
+		probablePrimeBool = primeFunctionChoice(2,i)
+
+		if probablePrimeBool == True:
+			primeList.append("2^%d-1" % i)
+
+	return primeList
+
+
+setup()
+
+print(primeCalculator(100))
+
+#print(BasicPrime.isItProbablyPrime(7))
+#print(ComplexPrime.isItPrime(2,3))
+
+#print(ComplexPrime.isItPrime(3,4))
 
