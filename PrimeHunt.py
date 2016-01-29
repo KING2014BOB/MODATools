@@ -1,22 +1,27 @@
-def hunt(noNums):
-	return 
+import BasicPrime
 
-def primeCalculator(noNums):
+#Power computations
+n = 7
 
-	for i in range(1,noNums + 1):
-		print("is %d prime: %s" % (i,isItProbablyPrime(i)) )
+def primeFunctionChoice(n):
 
-def isItProbablyPrime(possiblePrime):
-	lucasNumbersArray = []
+	if(n==1):
+		return isItPrime()
 
+	else:
+		return BasicPrime.isItProbablyPrime()
+
+
+def isItPrime(number,exponent):
+	lucasLehmerList = []
 	result = False
-	lucasNumbersArray = generateLucasNumbers(20)
 
-	comparisonNo = lucasNumbersArray[possiblePrime-1]
+	possiblePrime = (number ** exponent) - 1
+	print possiblePrime
 
-	#print((comparisonNo - 1) % possiblePrime )
+	lucasLehmerList = generateLucasLehmerNumbers(n)
 
-	if (comparisonNo - 1) % possiblePrime == 0:
+	if (lucasLehmerList[exponent-2] % possiblePrime == 0):
 		result = True
 
 	else:
@@ -24,23 +29,40 @@ def isItProbablyPrime(possiblePrime):
 
 	return result
 
-def generateLucasNumbers(noNums):
-	list = []
+def primeCalculator(noNums):
 
-	for i in range(0,noNums +  1):
-		list.append(lucasNumber(i))
+	primeList = []
 
-	return list
+	for i in range(1,noNums + 1):
+		probablePrime = isItProbablyPrime(i)
+		#print("is %d prime: %s" % (i,isItProbablyPrime(i)) )
 
-def lucasNumber(N):
-    if( N == 0 ):
-    	return 1
+		if probablePrime == True:
+			primeList.append(i)
 
-    elif( N == 1 ):
-    	return 3
+	print(primeList)
+	return probablePrime
 
-    else:
-    	return lucasNumber(N-1) + lucasNumber(N-2);
 
-primeCalculator(20)
+def generateLucasLehmerNumbers(noNums):
+
+	lucasLehmerList = []
+	for i in range(1,n + 1):
+		lucasLehmerList.append(getLucasLehmerNumber(i))
+
+	return(lucasLehmerList)
+
+
+def getLucasLehmerNumber(N):
+
+	if( N <= 1 ):
+		return 4
+
+	else:
+		return ((getLucasLehmerNumber(N-1) ** 2) - 2)
+
+isItPrime(2,3)
+#primeCalculator(30)
+
+print(BasicPrime.isItProbablyPrime(7))
 
